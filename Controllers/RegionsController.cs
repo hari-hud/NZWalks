@@ -44,15 +44,28 @@ public class RegionsController : ControllerBase
     [Route("{id:Guid}")]
     public IActionResult GetById([FromRoute] Guid id)
     {
+        
         // var region = dbContext.Regions.Find(id); 
         // OR
         var region = dbContext.Regions.FirstOrDefault(x => x.Id == id);
+        // FirstOrDefault can be used to check other prop however with Find we can use only id
 
         if (region == null) 
         {
             return NotFound();
         }
-        return Ok(region); 
+
+        // Map/Convert to DTO
+        RegionDto regionDto = new RegionDto
+        {
+            Id = region.Id,
+            Code = region.Code,
+            Name = region.Name,
+            RegionImageUrl = region.RegionImageUrl
+        };
+
+        // return DTO
+        return Ok(regionDto); 
     }
 
 
