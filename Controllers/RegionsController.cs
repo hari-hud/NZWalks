@@ -126,4 +126,24 @@ public class RegionsController : ControllerBase
 
         return Ok(response);
     }
+
+    [HttpDelete]
+    [Route("{id:Guid}")]
+    public IActionResult Delete([FromRoute] Guid id)
+    {
+        var region = dbContext.Regions.FirstOrDefault(x => x.Id == id);
+
+        if (region == null) 
+        {
+            return NotFound();
+        }
+
+        // delete 
+        dbContext.Regions.Remove(region);
+        dbContext.SaveChanges();
+
+
+        // return OK (optionally we can return deleted object)
+        return Ok(); 
+    }
 }
