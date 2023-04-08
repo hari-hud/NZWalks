@@ -96,4 +96,34 @@ public class RegionsController : ControllerBase
 
         return CreatedAtAction(nameof(GetById), new { id = response.Id }, response);
     }
+
+    [HttpPut]
+    [Route("{id:Guid}")]
+    public IActionResult Update([FromRoute] Guid id, [FromBody] UpdateRegionRwquestDto request)
+    {
+        // chekc if region exist
+        var region = dbContext.Regions.FirstOrDefault(x => x.Id == id);
+
+        if (region == null) {
+            return NotFound();
+        }
+
+        // convert DTO to domain model
+        region.Code = request.Code;
+        region.Name = request.Name;
+        region.RegionImageUrl = request.RegionImageUrl;
+
+        dbContext.SaveChanges();
+
+        // Map Domain Model to DTO
+        RegionDto response = new RegionDto
+        {
+            Id = region.Id,
+            Code = region.Code,
+            Name = region.Name,
+            RegionImageUrl = region.RegionImageUrl
+        };
+
+        return Ok(response);
+    }
 }
