@@ -47,13 +47,8 @@ public class RegionsController : ControllerBase
     [HttpGet]
     [Route("{id:Guid}")]
     public async Task<IActionResult> GetById([FromRoute] Guid id)
-    {
-        
-        // var region = dbContext.Regions.Find(id); 
-        // OR
-        var region = await dbContext.Regions.FirstOrDefaultAsync(x => x.Id == id);
-        // FirstOrDefault can be used to check other prop however with Find we can use only id
-
+    { 
+        var region = await regionRepository.GetByIdAsync(id);
         if (region == null) 
         {
             return NotFound();
@@ -86,8 +81,7 @@ public class RegionsController : ControllerBase
         };
 
         // Use domain model to create region
-        await dbContext.Regions.AddAsync(region);
-        await dbContext.SaveChangesAsync();
+        region = await regionRepository.CreateAsync(region);
 
         // Map Domain Model to DTO
         RegionDto response = new RegionDto
@@ -103,21 +97,21 @@ public class RegionsController : ControllerBase
 
     [HttpPut]
     [Route("{id:Guid}")]
-    public async Task<IActionResult> Update([FromRoute] Guid id, [FromBody] UpdateRegionRwquestDto request)
+    public async Task<IActionResult> Update([FromRoute] Guid id, [FromBody] UpdateRegionRequestDto request)
     {
-        // chekc if region exist
-        var region = await dbContext.Regions.FirstOrDefaultAsync(x => x.Id == id);
+        // Convert DTO to Domain Model
+        var region = new Region
+        {
+            Code = request.Code,
+            Name = request.Name,
+            RegionImageUrl = request.RegionImageUrl
+        };
+
+        region = await regionRepository.UpdateAsync(id, region);
 
         if (region == null) {
             return NotFound();
         }
-
-        // convert DTO to domain model
-        region.Code = request.Code;
-        region.Name = request.Name;
-        region.RegionImageUrl = request.RegionImageUrl;
-
-        await dbContext.SaveChangesAsync();
 
         // Map Domain Model to DTO
         RegionDto response = new RegionDto
@@ -135,18 +129,13 @@ public class RegionsController : ControllerBase
     [Route("{id:Guid}")]
     public async Task<IActionResult> Delete([FromRoute] Guid id)
     {
-        var region = await dbContext.Regions.FirstOrDefaultAsync(x => x.Id == id);
+        var region = await regionRepository.DeleteAsync(id);
 
         if (region == null) 
         {
             return NotFound();
         }
-
-        // delete 
-        dbContext.Regions.Remove(region); // remove does not have Async
-        await dbContext.SaveChangesAsync();
-
-        // return OK (optionally we can return deleted object)
+        
         return Ok(); 
     }
 }

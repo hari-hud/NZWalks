@@ -15,8 +15,8 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<NZWalkDbContext>(options =>
 options.UseMySQL(builder.Configuration.GetConnectionString("LocalConnection")));
 
-// builder.Services.AddScoped<IRegionRepository, MySqlRegionRepository>();
-builder.Services.AddScoped<IRegionRepository, InMemoryRegionRepository>();
+builder.Services.AddScoped<IRegionRepository, MySqlRegionRepository>();
+// builder.Services.AddScoped<IRegionRepository, InMemoryRegionRepository>();
 
 var app = builder.Build();
 
