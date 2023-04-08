@@ -70,10 +70,30 @@ public class RegionsController : ControllerBase
 
 
     [HttpPost]
-    public IActionResult Create(Region region)
+    public IActionResult Create([FromBody] AddRegionRequestDto request)
     {
+        // Convert DTO to Domain Model
+        Region region = new Region 
+        {
+            Code = request.Code,
+            Name = request.Name,
+            RegionImageUrl = request.RegionImageUrl
+            
+        };
+
+        // Use domain model to create region
         dbContext.Regions.Add(region);
         dbContext.SaveChanges();
-        return Ok();
+
+        // Map Domain Model to DTO
+        RegionDto response = new RegionDto
+        {
+            Id = region.Id,
+            Code = region.Code,
+            Name = region.Name,
+            RegionImageUrl = region.RegionImageUrl
+        };
+
+        return CreatedAtAction(nameof(GetById), new { id = response.Id }, response);
     }
 }
