@@ -65,7 +65,7 @@ public class WalkController : ControllerBase
 
     [HttpPut]
     [Route("{id:Guid}")]
-    public async Task<IActionResult> Update([FromRoute] Guid id, [FromBody] UpdateRegionRequestDto request)
+    public async Task<IActionResult> Update([FromRoute] Guid id, [FromBody] UpdateWalkDto request)
     {
         // Convert DTO to Domain Model
         var walk = mapper.Map<Walk>(request);
