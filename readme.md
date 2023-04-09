@@ -5,6 +5,7 @@
 dotnet add package MySql.EntityFrameworkCore--version 6.0.15
 dotnet add package Microsoft.EntityFrameworkCore.Tools --version 6.0.15
 dotnet add package Microsoft.EntityFrameworkCore.Design --version 6.0.15
+dotnet add package AutoMapper.Extensions.Microsoft.DependencyInjection --version 6.1.1
 ```
 
 ### Migration Commands

@@ -1,5 +1,7 @@
+using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using NZWalks.Data;
+using NZWalks.Mappings;
 using NZWalks.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -17,6 +19,8 @@ options.UseMySQL(builder.Configuration.GetConnectionString("LocalConnection")));
 
 builder.Services.AddScoped<IRegionRepository, MySqlRegionRepository>();
 // builder.Services.AddScoped<IRegionRepository, InMemoryRegionRepository>();
+
+builder.Services.AddAutoMapper(typeof(AutoMapperProfiles));
 
 var app = builder.Build();
 

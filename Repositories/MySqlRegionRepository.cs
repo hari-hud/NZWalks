@@ -1,7 +1,6 @@
 using NZWalks.Data;
 using NZWalks.Models.Domain;
 using Microsoft.EntityFrameworkCore;
-using NZWalks.Models.DTO;
 
 namespace NZWalks.Repositories
 {
@@ -44,7 +43,7 @@ namespace NZWalks.Repositories
             existingRegion.RegionImageUrl = region.RegionImageUrl;
 
             await dbContext.SaveChangesAsync();
-            return region;
+            return existingRegion;
         }
 
         public async Task<Region?> DeleteAsync(Guid id)
