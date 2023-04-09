@@ -20,6 +20,8 @@ options.UseMySQL(builder.Configuration.GetConnectionString("LocalConnection")));
 builder.Services.AddScoped<IRegionRepository, MySqlRegionRepository>();
 // builder.Services.AddScoped<IRegionRepository, InMemoryRegionRepository>();
 
+builder.Services.AddScoped<IWalkRepository, MySqlWalkRepository>();
+
 builder.Services.AddAutoMapper(typeof(AutoMapperProfiles));
 
 var app = builder.Build();

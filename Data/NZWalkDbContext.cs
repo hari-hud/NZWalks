@@ -29,12 +29,12 @@ namespace NZWalks.Data
                 new Difficulty
                 {
                     Id = Guid.Parse("70641a5d-811d-4fce-a79d-a8485f53b1c2"),
-                    Name = "Easy"
+                    Name = "Medium"
                 },
                 new Difficulty
                 {
                     Id = Guid.Parse("5473611c-82b7-4c73-b0c5-8f38cdef4730"),
-                    Name = "Easy"
+                    Name = "Difficult"
                 }
             };
 
