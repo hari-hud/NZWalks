@@ -20,11 +20,16 @@ public class WalkController : ControllerBase
         this.mapper = mapper;
     }
 
+    // GET api/walk?filterOn=Name&filterQuery=beach&sortBy=Name&IsAscending=true&pageNumber=1&pageSize=5
     [HttpGet]
-    public async Task<IActionResult> GetAll()
+    public async Task<IActionResult> GetAll(
+        [FromQuery] string? filterOn, [FromQuery] string? filterQuery,
+        [FromQuery] string? sortBy, [FromQuery] bool? IsAscending,
+        [FromQuery] int pageNumber = 1, [FromQuery] int pageSize = 100)
     {
         // Get Data from Database Model - Domain Model
-         var walks = await walkRepository.GetAllAsync();
+        var walks = await walkRepository.GetAllAsync(filterOn, filterQuery, sortBy, IsAscending ?? true, pageNumber, pageSize);
+        // IsAscending ?? true == > when IsAscending is null pass true
 
         // Map domain model to DTO
         var walkDto = mapper.Map<List<WalkDto>>(walks);
