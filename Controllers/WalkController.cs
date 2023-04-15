@@ -49,8 +49,14 @@ public class WalkController : ControllerBase
 
 
     [HttpPost]
+    [ValidateModel]
     public async Task<IActionResult> Create([FromBody] CreateWalkDto request)
     {
+        if (!ModelState.IsValid)
+        {
+            return BadRequest();
+        }
+
         // Convert DTO to Domain Model
         var walk = mapper.Map<Walk>(request);
 
@@ -65,8 +71,14 @@ public class WalkController : ControllerBase
 
     [HttpPut]
     [Route("{id:Guid}")]
+    [ValidateModel]
     public async Task<IActionResult> Update([FromRoute] Guid id, [FromBody] UpdateWalkDto request)
     {
+        if (!ModelState.IsValid)
+        {
+            return BadRequest();
+        }
+
         // Convert DTO to Domain Model
         var walk = mapper.Map<Walk>(request);
 

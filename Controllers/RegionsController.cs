@@ -54,20 +54,28 @@ public class RegionsController : ControllerBase
     [HttpPost]
     public async Task<IActionResult> Create([FromBody] AddRegionRequestDto request)
     {
-        // Convert DTO to Domain Model
-        var region = mapper.Map<Region>(request);
+        if (ModelState.IsValid) {
+            // Convert DTO to Domain Model
+            var region = mapper.Map<Region>(request);
 
-        // Use domain model to create region
-        region = await regionRepository.CreateAsync(region);
+            // Use domain model to create region
+            region = await regionRepository.CreateAsync(region);
 
-        // Map Domain Model to DTO
-        RegionDto response  = mapper.Map<RegionDto>(region);
+            // Map Domain Model to DTO
+            RegionDto response  = mapper.Map<RegionDto>(region);
 
-        return CreatedAtAction(nameof(GetById), new { id = response.Id }, response);
+            return CreatedAtAction(nameof(GetById), new { id = response.Id }, response);
+        } 
+        else 
+        {
+            return BadRequest(ModelState);
+        }
+        
     }
 
     [HttpPut]
     [Route("{id:Guid}")]
+    [ValidateModel] // This is the alternative & clean way for if condition added in the above create method
     public async Task<IActionResult> Update([FromRoute] Guid id, [FromBody] UpdateRegionRequestDto request)
     {
         // Convert DTO to Domain Model
