@@ -6,7 +6,7 @@ namespace NZWalks.Data
 {
     public class NZWalkAuthDbContext: IdentityDbContext
     {
-        public NZWalkAuthDbContext(DbContextOptions options) : base(options)
+        public NZWalkAuthDbContext(DbContextOptions<NZWalkAuthDbContext> options) : base(options)
         {
             
         }
