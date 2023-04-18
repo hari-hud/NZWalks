@@ -6,6 +6,12 @@ dotnet add package MySql.EntityFrameworkCore--version 6.0.15
 dotnet add package Microsoft.EntityFrameworkCore.Tools --version 6.0.15
 dotnet add package Microsoft.EntityFrameworkCore.Design --version 6.0.15
 dotnet add package AutoMapper.Extensions.Microsoft.DependencyInjection --version 6.1.1
+
+# packages for authn & authz
+dotnet add package Microsoft.AspNetCore.Authentication.JwtBearer --version 6.0.16
+dotnet add package Microsoft.IdentityModel.Tokens --version 6.29.0
+dotnet add package System.IdentityModel.Tokens.Jwt --version 6.29.0
+dotnet add package Microsoft.AspNetCore.Identity.EntityFrameworkCore --version 8.0.0-preview.3.23177.8e
 ```
 
 ### Migration Commands
