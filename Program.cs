@@ -18,7 +18,10 @@ builder.Services.AddSwaggerGen();
 
 // Inject DB Context and connection string
 builder.Services.AddDbContext<NZWalkDbContext>(options =>
-options.UseMySQL(builder.Configuration.GetConnectionString("LocalConnection")));
+options.UseMySQL(builder.Configuration.GetConnectionString("NZWalksConnection")));
+
+builder.Services.AddDbContext<NZWalkAuthDbContext>(options =>
+options.UseMySQL(builder.Configuration.GetConnectionString("NZWalksAuthnConnection")));
 
 builder.Services.AddScoped<IRegionRepository, MySqlRegionRepository>();
 // builder.Services.AddScoped<IRegionRepository, InMemoryRegionRepository>();
