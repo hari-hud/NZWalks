@@ -11,7 +11,6 @@ namespace NZWalks.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-[Authorize]
 public class RegionsController : ControllerBase
 {
     private readonly NZWalkDbContext dbContext;
@@ -26,6 +25,7 @@ public class RegionsController : ControllerBase
     }
 
     [HttpGet]
+    [Authorize(Roles = "Reader,Writer")]
     public async Task<IActionResult> GetAll()
     {
         // Get Data from Database Model - Domain Model
@@ -40,6 +40,7 @@ public class RegionsController : ControllerBase
 
     [HttpGet]
     [Route("{id:Guid}")]
+    [Authorize(Roles = "Reader,Writer")]
     public async Task<IActionResult> GetById([FromRoute] Guid id)
     { 
         var region = await regionRepository.GetByIdAsync(id);
@@ -54,6 +55,7 @@ public class RegionsController : ControllerBase
 
 
     [HttpPost]
+    [Authorize(Roles = "Writer")]
     public async Task<IActionResult> Create([FromBody] AddRegionRequestDto request)
     {
         if (ModelState.IsValid) {
@@ -77,6 +79,7 @@ public class RegionsController : ControllerBase
 
     [HttpPut]
     [Route("{id:Guid}")]
+    [Authorize(Roles = "Writer")]
     [ValidateModel] // This is the alternative & clean way for if condition added in the above create method
     public async Task<IActionResult> Update([FromRoute] Guid id, [FromBody] UpdateRegionRequestDto request)
     {
@@ -97,6 +100,7 @@ public class RegionsController : ControllerBase
 
     [HttpDelete]
     [Route("{id:Guid}")]
+    [Authorize(Roles = "Writer")]
     public async Task<IActionResult> Delete([FromRoute] Guid id)
     {
         var region = await regionRepository.DeleteAsync(id);
