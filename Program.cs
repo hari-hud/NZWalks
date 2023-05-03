@@ -29,6 +29,8 @@ builder.Services.AddScoped<IRegionRepository, MySqlRegionRepository>();
 
 builder.Services.AddScoped<IWalkRepository, MySqlWalkRepository>();
 
+builder.Services.AddScoped<ITokenRepository, TokenRepository>();
+
 builder.Services.AddAutoMapper(typeof(AutoMapperProfiles));
 
 builder.Services.AddIdentityCore<IdentityUser>()

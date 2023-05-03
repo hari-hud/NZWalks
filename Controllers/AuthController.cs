@@ -14,10 +14,12 @@ namespace NZWalks.Controllers;
 public class AuthController : ControllerBase
 {
     private readonly UserManager<IdentityUser> userManager;
+    private readonly ITokenRepository tokenRepository;
 
-    public AuthController(UserManager<IdentityUser> userManager)
+    public AuthController(UserManager<IdentityUser> userManager, ITokenRepository tokenRepository)
     {
         this.userManager = userManager;
+        this.tokenRepository = tokenRepository;
     }
 
     [HttpPost]
@@ -60,7 +62,17 @@ public class AuthController : ControllerBase
 
             if (isPasswordValid) {
                 // create token and return in response
-                return Ok();
+                var roles = await userManager.GetRolesAsync(user);
+
+                var jwtToken = tokenRepository.CreateJWTToken(user, roles.ToList());
+
+                // In future this class can be used to return add'l user details in response
+                // like email, roles, etc.
+                var response = new LoginResponseDto {
+                    JwtToken = jwtToken
+                };
+
+                return Ok(response);
             }
         }
 
