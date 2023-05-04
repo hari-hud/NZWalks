@@ -1,3 +1,4 @@
+using System.Text.Json;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -16,26 +17,42 @@ public class RegionsController : ControllerBase
     private readonly NZWalkDbContext dbContext;
     private readonly IRegionRepository regionRepository;
     private readonly IMapper mapper;
+    ILogger<RegionsController> logger;
 
-    public RegionsController(NZWalkDbContext dbContext, IRegionRepository regionRepository, IMapper mapper)
+    public RegionsController(NZWalkDbContext dbContext,
+                             IRegionRepository regionRepository,
+                             IMapper mapper,
+                             ILogger<RegionsController> logger)
     {
         this.dbContext = dbContext;
         this.regionRepository = regionRepository;
         this.mapper = mapper;
+        this.logger = logger;
     }
 
     [HttpGet]
     [Authorize(Roles = "Reader,Writer")]
     public async Task<IActionResult> GetAll()
     {
-        // Get Data from Database Model - Domain Model
-         var regions = await regionRepository.GetAllAsync();
+        logger.LogInformation("Invoked GetAll() Region controller method");
 
-        // Map domain model to DTO
-        var regionDto = mapper.Map<List<RegionDto>>(regions);
-        
-        // Return DTO
-        return Ok(regionDto); 
+        try {
+            // Get Data from Database Model - Domain Model
+            var regions = await regionRepository.GetAllAsync();
+
+            // Map domain model to DTO
+            var regionDto = mapper.Map<List<RegionDto>>(regions);
+
+            logger.LogInformation($"Finished getAll regions with data: {JsonSerializer.Serialize(regionDto)}");
+            
+            // Return DTO
+            return Ok(regionDto); 
+        }
+        catch (Exception ex)
+        {
+            logger.LogError(ex, ex.Message);
+            throw;
+        }
     }
 
     [HttpGet]

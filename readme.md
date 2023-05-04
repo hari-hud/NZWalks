@@ -12,6 +12,11 @@ dotnet add package Microsoft.AspNetCore.Authentication.JwtBearer --version 6.0.1
 dotnet add package Microsoft.IdentityModel.Tokens --version 6.29.0
 dotnet add package System.IdentityModel.Tokens.Jwt --version 6.29.0
 dotnet add package Microsoft.AspNetCore.Identity.EntityFrameworkCore --version 8.0.0-preview.3.23177.8e
+
+# logging
+dotnet add package Serilog --version 2.10.0
+dotnet add package Serilog.AspNetCore --version 6.1.0
+dotnet add package Serilog.Sinks.Console --version 4.1.0
 ```
 
 ### Migration Commands
