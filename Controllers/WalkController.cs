@@ -4,6 +4,7 @@ using NZWalks.Data;
 using NZWalks.Models.Domain;
 using NZWalks.Models.DTO;
 using NZWalks.Repositories;
+using System.Net;
 
 namespace NZWalks.Controllers;
 
@@ -27,15 +28,25 @@ public class WalkController : ControllerBase
         [FromQuery] string? sortBy, [FromQuery] bool? IsAscending,
         [FromQuery] int pageNumber = 1, [FromQuery] int pageSize = 100)
     {
-        // Get Data from Database Model - Domain Model
-        var walks = await walkRepository.GetAllAsync(filterOn, filterQuery, sortBy, IsAscending ?? true, pageNumber, pageSize);
-        // IsAscending ?? true == > when IsAscending is null pass true
+        // Note: Instead of adding try catch to handle exception 
+        // implement GlobalExceptionHandler to handler exception for all APIs
+        try
+        {
+            // Get Data from Database Model - Domain Model
+            var walks = await walkRepository.GetAllAsync(filterOn, filterQuery, sortBy, IsAscending ?? true, pageNumber, pageSize);
+            // IsAscending ?? true == > when IsAscending is null pass true
 
-        // Map domain model to DTO
-        var walkDto = mapper.Map<List<WalkDto>>(walks);
-        
-        // Return DTO
-        return Ok(walkDto); 
+            // Map domain model to DTO
+            var walkDto = mapper.Map<List<WalkDto>>(walks);
+            
+            // Return DTO
+            return Ok(walkDto); 
+        }
+        catch (Exception ex)
+        {
+            // TODO: Log the exception
+            return Problem("Somehting went wrong", null, (int) HttpStatusCode.InternalServerError);
+        }
     }
 
     [HttpGet]
