@@ -1,0 +1,8 @@
+2023-05-04 10:00:53.482 +05:30 [INF] User profile is available. Using '/Users/hhud/.aspnet/DataProtection-Keys' as key repository; keys will not be encrypted at rest.
+2023-05-04 10:00:53.863 +05:30 [INF] Now listening on: https://localhost:7245
+2023-05-04 10:00:53.863 +05:30 [INF] Now listening on: http://localhost:5064
+2023-05-04 10:00:53.865 +05:30 [INF] Application started. Press Ctrl+C to shut down.
+2023-05-04 10:00:53.865 +05:30 [INF] Hosting environment: Development
+2023-05-04 10:00:53.866 +05:30 [INF] Content root path: /Users/hhud/Desktop/NV-Hari/Learning/DotNet/projects/NZWalks/
+2023-05-04 10:00:54.040 +05:30 [INF] Request starting HTTP/1.1 GET https://localhost:7245/ - -
+2023-05-04 10:00:54.215 +05:30 [INF] Request finished HTTP/1.1 GET https://localhost:7245/ - - - 404 0 - 180.7769ms

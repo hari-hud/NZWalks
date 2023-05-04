@@ -17,6 +17,7 @@ dotnet add package Microsoft.AspNetCore.Identity.EntityFrameworkCore --version 8
 dotnet add package Serilog --version 2.10.0
 dotnet add package Serilog.AspNetCore --version 6.1.0
 dotnet add package Serilog.Sinks.Console --version 4.1.0
+dotnet add package Serilog.Sinks.File --version 5.0.0
 ```
 
 ### Migration Commands
