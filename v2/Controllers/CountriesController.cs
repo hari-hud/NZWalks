@@ -1,10 +1,10 @@
 using Microsoft.AspNetCore.Mvc;
 using NZWalks.Models.DTO;
 
-namespace NZWalks.Controllers;
+namespace NZWalks.V2.Controllers;
 
 [ApiController]
-[Route("api/[controller]")]
+[Route("api/v2/[controller]")]
 public class CountriesController : ControllerBase
 {
     [HttpGet]
@@ -13,13 +13,13 @@ public class CountriesController : ControllerBase
         var countriesDomainModel = CountriesData.Get();
 
         // Map Domain Model to DTO
-        var response = new List<CountryDto>();
+        var response = new List<CountryDtoV2>();
         foreach(var countryDomain in countriesDomainModel)
         {
-            response.Add(new CountryDto
+            response.Add(new CountryDtoV2
             {
                 Id = countryDomain.Id,
-                Name = countryDomain.Name
+                CountryName = countryDomain.Name
             });
         }
 
