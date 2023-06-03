@@ -39,3 +39,6 @@ dotnet run
 ### Swagger
 
 https://localhost:7245/swagger/index.html
+
+### Ref
+https://github.com/sameer8saini/NZWalks-Solution.git
